@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product 2 - Comprar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+
+    </header>
+    
+    <main>
+        <section class="product-details">
+            <h1>Guitarra</h1>
+            <img src="assets/1.JPEG" alt="Guitarra">
+            <p>Descrição do produto: Guitarra</p>
+            <p>Preço: R$ 700,00</p>
+
+            <form id="comprarForm">
+                  <label for="name">Nome:</label>
+                  <input type="text" id="name" name="nome" required>
+
+                  <label for="card-number">Número do Cartão:</label>
+                  <input type="text" id="card-number" name="numeroCartao" required>
+  
+                  <label for="expiration">Data de Validade:</label>
+                  <input type="text" id="expiration" name="validade" placeholder="MM/AA" required>
+  
+                  <label for="cvv">CVV:</label>
+                  <input type="text" id="cvv" name="cvv" required>
+
+                   
+                <button type="submit">Comprar</button>
+                <div id="mensagem-agradecimento-detalhes" style="display: none;">
+                    <p>Obrigado por sua compra! Seu pedido foi recebido.</p>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Site de instrumentos musicais.</p>
+        <p>Entre em contato: (13) 981430940</p>
+        <p>Email: elvispereira070@gmail.com</p>
+        <p>&copy; 2024 Descubra nossa loja de instrumentos musicais. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById("comprarForm").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Evita o comportamento padrão de envio do formulário
+            
+            const formData = new FormData(this); // Cria um objeto FormData com os dados do formulário
+            
+            try {
+                const response = await fetch('/comprar', {
+                    method: 'POST',
+                    body: formData
+                });
+                if (response.ok) {
+                    // Oculta o formulário e exibe a mensagem de agradecimento
+                    document.getElementById("comprarForm").style.display = "none";
+                    document.getElementById("mensagem-agradecimento-detalhes").style.display = "block";
+                } else {
+                    throw new Error('Erro ao processar pedido');
+                }
+            } catch (error) {
+                console.error('Erro ao processar pedido:', error);
+                alert('Erro ao processar pedido. Por favor, tente novamente mais tarde.');
+            }
+        });
+    </script>
+</body>
+</html>
